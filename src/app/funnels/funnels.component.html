@@ -1,0 +1,26 @@
+<div class="main-div">
+    <button class="toggle-btn" (click)="toggleCheckboxes()">
+        <span class="icon">{{ showCheckboxes ? '−' : '' }}</span>
+        {{ showCheckboxes ? 'Скрыть чекбоксы' : ('Выбрано: ' + selectedCount.funnels + ' воронки, ' + selectedCount.stages + ' этапа') }}
+    </button>
+
+    <div *ngIf="showCheckboxes" class="checkbox-container">
+        <div *ngFor="let item of checkboxItems" class="checkbox-item">
+            <button class="checkbox-btn" (click)="toggleSubCheckboxes(item)">
+                <span class="icon">{{ item.open ? '−' : '' }}</span>
+                {{ item.label }}
+            </button>
+
+            <div *ngIf="item.open" class="sub-checkbox-container">
+                <label *ngFor="let sub of item.subItems" class="sub-checkbox-item">
+                    <input
+                            type="checkbox"
+                            [name]="sub"
+                            [checked]="item.selected.includes(sub)"
+                            (change)="toggleSelection(item, sub)">
+                    {{ sub }}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
